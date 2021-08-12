@@ -1,0 +1,24 @@
+python: difference between sys.getsizeof and __sizeof__?
+
+
+While working on a type for self-replenishing generator, I noticed that when I call these on some list ```w = [*range(n)]```, I get different answers
+Further, when I call sys.getsizeof on instances of the type I get different answers before and after creating a magic method for the class.
+Beforehand the values of two instances are the same (~48 bytes), but after they are different, and yet the output of ```instance.__sizeof__``` is also not equal to ```getsizeof(instance)```.
+
+The class and magic method were, basically, defined as follows:
+```python
+from itertools import tee
+from sys import getsizeof
+class regenerator:
+    def __init__(self, base):
+        self.active, self._inert = tee(base)
+    def __iter__(self):
+        self.active, self._inert = tee(base)
+        return self.active
+    def __next__(self):
+        return next(self.active)
+    def __sizeof__(self):
+        return sum(map(getsizeof, self))
+```
+
+So the question is, how are the sys function and magic methods implemented on lists and how should I be implementing them here?

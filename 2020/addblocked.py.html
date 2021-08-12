@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/strict.dtd">
+<html>
+<head>
+<META http-equiv=Content-Type content="text/html; charset=UTF-8">
+<title>Exported from Notepad++</title>
+<style type="text/css">
+span {
+	font-family: 'Courier New';
+	font-size: 10pt;
+	color: #E0E2E4;
+}
+.sc0 {
+	font-family: 'Cascadia Code';
+}
+.sc1 {
+	color: #66747B;
+}
+.sc2 {
+	color: #FFCD22;
+}
+.sc4 {
+	color: #FF8409;
+}
+.sc5 {
+	font-weight: bold;
+	color: #93C763;
+}
+.sc7 {
+	color: #66747B;
+}
+.sc9 {
+	font-weight: bold;
+	color: #678CB1;
+}
+.sc10 {
+	color: #E8E2B7;
+}
+.sc11 {
+}
+.sc14 {
+}
+</style>
+</head>
+<body>
+<div style="float: left; white-space: pre; line-height: 1; background: #293134; "><span class="sc7">"""\
+Scrape (and listen to) the html and/or text of an adblocked (and any other non-bot-weary) webpage\
+"""</span><span class="sc0">
+</span><span class="sc10">```</span><span class="sc0">
+</span><span class="sc5">import</span><span class="sc0"> </span><span class="sc11">os</span><span class="sc10">,</span><span class="sc0"> </span><span class="sc11">re</span><span class="sc0">
+</span><span class="sc5">from</span><span class="sc0"> </span><span class="sc11">itertools</span><span class="sc0"> </span><span class="sc5">import</span><span class="sc0"> </span><span class="sc11">tee</span><span class="sc0">
+
+</span><span class="sc5">import</span><span class="sc0"> </span><span class="sc11">requests</span><span class="sc10">,</span><span class="sc0"> </span><span class="sc11">pyttsx3</span><span class="sc0">
+</span><span class="sc5">from</span><span class="sc0"> </span><span class="sc11">bs4</span><span class="sc0"> </span><span class="sc5">import</span><span class="sc0"> </span><span class="sc11">BeautifulSoup</span><span class="sc0">
+
+
+</span><span class="sc5">def</span><span class="sc0"> </span><span class="sc9">setname</span><span class="sc10">(</span><span class="sc11">url</span><span class="sc10">:</span><span class="sc14">str</span><span class="sc10">,</span><span class="sc11">ext</span><span class="sc10">:</span><span class="sc14">str</span><span class="sc10">=</span><span class="sc4">'.txt'</span><span class="sc10">)</span><span class="sc0"> </span><span class="sc10">-&gt;</span><span class="sc0"> </span><span class="sc14">str</span><span class="sc10">:</span><span class="sc0">
+    </span><span class="sc11">title</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">url</span><span class="sc10">.</span><span class="sc11">split</span><span class="sc10">(</span><span class="sc4">'/'</span><span class="sc10">)[-</span><span class="sc2">1</span><span class="sc10">].</span><span class="sc11">replace</span><span class="sc10">(</span><span class="sc4">'#'</span><span class="sc10">,</span><span class="sc4">''</span><span class="sc10">)</span><span class="sc0">
+    </span><span class="sc5">while</span><span class="sc0"> </span><span class="sc11">re</span><span class="sc10">.</span><span class="sc11">search</span><span class="sc10">(</span><span class="sc4">'^.+-\d+'</span><span class="sc10">,</span><span class="sc11">title</span><span class="sc10">):</span><span class="sc0">
+        </span><span class="sc11">title</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">'-'</span><span class="sc10">.</span><span class="sc11">join</span><span class="sc10">(</span><span class="sc11">title</span><span class="sc10">.</span><span class="sc11">split</span><span class="sc10">(</span><span class="sc4">'-'</span><span class="sc10">)[:-</span><span class="sc2">1</span><span class="sc10">])</span><span class="sc0">
+    </span><span class="sc5">return</span><span class="sc0"> </span><span class="sc11">title</span><span class="sc10">+</span><span class="sc11">ext</span><span class="sc0">
+    
+</span><span class="sc5">def</span><span class="sc0"> </span><span class="sc9">scrapePage</span><span class="sc10">(</span><span class="sc11">url</span><span class="sc10">:</span><span class="sc14">str</span><span class="sc10">,</span><span class="sc11">save</span><span class="sc10">:</span><span class="sc14">bool</span><span class="sc10">=</span><span class="sc5">True</span><span class="sc10">)</span><span class="sc0"> </span><span class="sc10">-&gt;</span><span class="sc0"> </span><span class="sc14">str</span><span class="sc10">:</span><span class="sc0">
+    </span><span class="sc11">name</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">setname</span><span class="sc10">(</span><span class="sc11">url</span><span class="sc10">,</span><span class="sc4">'.html'</span><span class="sc10">)</span><span class="sc0">
+    </span><span class="sc11">r</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">requests</span><span class="sc10">.</span><span class="sc11">get</span><span class="sc10">(</span><span class="sc11">url</span><span class="sc10">)</span><span class="sc0">
+    </span><span class="sc11">soup</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">BeautifulSoup</span><span class="sc10">(</span><span class="sc11">r</span><span class="sc10">.</span><span class="sc11">text</span><span class="sc10">,</span><span class="sc4">'lxml'</span><span class="sc10">)</span><span class="sc0">
+    </span><span class="sc11">content</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">tee</span><span class="sc10">(</span><span class="sc11">p</span><span class="sc0"> </span><span class="sc5">for</span><span class="sc0"> </span><span class="sc11">p</span><span class="sc0"> </span><span class="sc5">in</span><span class="sc0"> </span><span class="sc11">soup</span><span class="sc10">.</span><span class="sc11">find_all</span><span class="sc10">(</span><span class="sc4">'p'</span><span class="sc10">))</span><span class="sc0">
+    </span><span class="sc5">if</span><span class="sc0"> </span><span class="sc11">save</span><span class="sc10">:</span><span class="sc0">
+        </span><span class="sc5">with</span><span class="sc0"> </span><span class="sc14">open</span><span class="sc10">(</span><span class="sc11">name</span><span class="sc10">,</span><span class="sc4">'w'</span><span class="sc10">)</span><span class="sc0"> </span><span class="sc5">as</span><span class="sc0"> </span><span class="sc11">fobj</span><span class="sc10">:</span><span class="sc0">
+            </span><span class="sc11">fobj</span><span class="sc10">.</span><span class="sc11">write</span><span class="sc10">(</span><span class="sc11">content</span><span class="sc10">[</span><span class="sc2">0</span><span class="sc10">])</span><span class="sc0">
+    </span><span class="sc5">return</span><span class="sc0"> </span><span class="sc11">content</span><span class="sc10">[</span><span class="sc2">1</span><span class="sc10">]</span><span class="sc0">
+
+</span><span class="sc5">def</span><span class="sc0"> </span><span class="sc9">scrapeText</span><span class="sc10">(</span><span class="sc11">url</span><span class="sc10">:</span><span class="sc14">str</span><span class="sc10">,</span><span class="sc11">save</span><span class="sc10">:</span><span class="sc14">bool</span><span class="sc10">=</span><span class="sc5">False</span><span class="sc10">)</span><span class="sc0"> </span><span class="sc10">-&gt;</span><span class="sc0"> </span><span class="sc14">str</span><span class="sc10">:</span><span class="sc0">
+    </span><span class="sc11">name</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">setname</span><span class="sc10">(</span><span class="sc11">url</span><span class="sc10">)</span><span class="sc0">
+    </span><span class="sc11">r</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">requests</span><span class="sc10">.</span><span class="sc11">get</span><span class="sc10">(</span><span class="sc11">url</span><span class="sc10">)</span><span class="sc0">
+    </span><span class="sc11">soup</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">BeautifulSoup</span><span class="sc10">(</span><span class="sc11">r</span><span class="sc10">.</span><span class="sc11">text</span><span class="sc10">,</span><span class="sc4">'lxml'</span><span class="sc10">)</span><span class="sc0">
+    </span><span class="sc11">content</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc10">(</span><span class="sc11">p</span><span class="sc10">.</span><span class="sc11">text</span><span class="sc10">.</span><span class="sc11">strip</span><span class="sc10">()</span><span class="sc0"> </span><span class="sc5">for</span><span class="sc0"> </span><span class="sc11">p</span><span class="sc0"> </span><span class="sc5">in</span><span class="sc0"> </span><span class="sc11">soup</span><span class="sc10">.</span><span class="sc11">find_all</span><span class="sc10">(</span><span class="sc4">'p'</span><span class="sc10">))</span><span class="sc0">
+    </span><span class="sc11">text</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">'\n\t'</span><span class="sc10">.</span><span class="sc11">join</span><span class="sc10">(</span><span class="sc11">content</span><span class="sc10">)</span><span class="sc0">
+    </span><span class="sc5">if</span><span class="sc0"> </span><span class="sc11">save</span><span class="sc10">:</span><span class="sc0">
+        </span><span class="sc5">with</span><span class="sc0"> </span><span class="sc14">open</span><span class="sc10">(</span><span class="sc11">name</span><span class="sc10">,</span><span class="sc4">'w'</span><span class="sc10">)</span><span class="sc0"> </span><span class="sc5">as</span><span class="sc0"> </span><span class="sc11">fobj</span><span class="sc10">:</span><span class="sc0">
+            </span><span class="sc11">fobj</span><span class="sc10">.</span><span class="sc11">write</span><span class="sc10">(</span><span class="sc11">text</span><span class="sc10">)</span><span class="sc0">
+    </span><span class="sc5">return</span><span class="sc0"> </span><span class="sc11">text</span><span class="sc0">
+
+</span><span class="sc5">def</span><span class="sc0"> </span><span class="sc9">load</span><span class="sc10">(</span><span class="sc11">url</span><span class="sc10">:</span><span class="sc14">str</span><span class="sc10">,</span><span class="sc11">save</span><span class="sc10">=</span><span class="sc5">False</span><span class="sc10">,</span><span class="sc11">ext</span><span class="sc10">:</span><span class="sc14">str</span><span class="sc10">=</span><span class="sc4">'.txt'</span><span class="sc10">)</span><span class="sc0"> </span><span class="sc10">-&gt;</span><span class="sc0"> </span><span class="sc14">str</span><span class="sc10">:</span><span class="sc0">
+    </span><span class="sc5">try</span><span class="sc10">:</span><span class="sc0">
+        </span><span class="sc5">with</span><span class="sc0"> </span><span class="sc14">open</span><span class="sc10">(</span><span class="sc11">setname</span><span class="sc10">(</span><span class="sc11">url</span><span class="sc10">,</span><span class="sc11">ext</span><span class="sc10">),</span><span class="sc4">'r'</span><span class="sc10">)</span><span class="sc0"> </span><span class="sc5">as</span><span class="sc0"> </span><span class="sc11">fobj</span><span class="sc10">:</span><span class="sc0">
+            </span><span class="sc11">text</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">''</span><span class="sc10">.</span><span class="sc11">join</span><span class="sc10">(</span><span class="sc11">fobj</span><span class="sc10">.</span><span class="sc11">readlines</span><span class="sc10">())</span><span class="sc0">
+    </span><span class="sc5">except</span><span class="sc0"> </span><span class="sc14">FileNotFoundError</span><span class="sc10">:</span><span class="sc0">
+        </span><span class="sc5">try</span><span class="sc10">:</span><span class="sc0">
+            </span><span class="sc5">with</span><span class="sc0"> </span><span class="sc14">open</span><span class="sc10">(</span><span class="sc11">url</span><span class="sc10">,</span><span class="sc4">'r'</span><span class="sc10">)</span><span class="sc0"> </span><span class="sc5">as</span><span class="sc0"> </span><span class="sc11">fobj</span><span class="sc10">:</span><span class="sc0">
+                </span><span class="sc11">text</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">''</span><span class="sc10">.</span><span class="sc11">join</span><span class="sc10">(</span><span class="sc11">fobj</span><span class="sc10">.</span><span class="sc11">readlines</span><span class="sc10">())</span><span class="sc0">
+        </span><span class="sc5">except</span><span class="sc0"> </span><span class="sc14">FileNotFoundError</span><span class="sc10">:</span><span class="sc0">
+            </span><span class="sc11">scrapeText</span><span class="sc10">(</span><span class="sc11">url</span><span class="sc10">,</span><span class="sc11">save</span><span class="sc10">)</span><span class="sc0">
+            </span><span class="sc11">load</span><span class="sc10">(</span><span class="sc11">url</span><span class="sc10">)</span><span class="sc0">
+    </span><span class="sc5">return</span><span class="sc0"> </span><span class="sc11">text</span><span class="sc0">
+    
+</span><span class="sc5">def</span><span class="sc0"> </span><span class="sc9">narrate</span><span class="sc10">(</span><span class="sc11">url</span><span class="sc10">:</span><span class="sc14">str</span><span class="sc10">,</span><span class="sc11">ext</span><span class="sc10">=</span><span class="sc4">'.txt'</span><span class="sc10">)</span><span class="sc0"> </span><span class="sc10">-&gt;</span><span class="sc0"> </span><span class="sc14">None</span><span class="sc10">:</span><span class="sc0">
+    </span><span class="sc11">text</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">load</span><span class="sc10">(</span><span class="sc11">url</span><span class="sc10">,</span><span class="sc11">ext</span><span class="sc10">)</span><span class="sc0">
+    </span><span class="sc11">engine</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">pyttsx3</span><span class="sc10">.</span><span class="sc11">init</span><span class="sc10">()</span><span class="sc0">
+    </span><span class="sc11">engine</span><span class="sc10">.</span><span class="sc11">say</span><span class="sc10">(</span><span class="sc11">text</span><span class="sc10">)</span><span class="sc0">
+    </span><span class="sc11">engine</span><span class="sc10">.</span><span class="sc11">runAndWait</span><span class="sc10">()</span><span class="sc0">
+
+
+</span><span class="sc5">if</span><span class="sc0"> </span><span class="sc11">__name__</span><span class="sc0"> </span><span class="sc10">==</span><span class="sc0"> </span><span class="sc4">'__main__'</span><span class="sc10">:</span><span class="sc0">
+    </span><span class="sc11">url</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc4">'https://markets.businessinsider.com/news/stocks/robinhood-stock-market-controversial-week-traders-cyberattack-accounts-trading-margin-2020-10-1029690410#'</span><span class="sc0">
+    </span><span class="sc14">print</span><span class="sc10">(</span><span class="sc11">setname</span><span class="sc10">(</span><span class="sc11">url</span><span class="sc10">))</span><span class="sc0">
+    </span><span class="sc11">text</span><span class="sc0"> </span><span class="sc10">=</span><span class="sc0"> </span><span class="sc11">load</span><span class="sc10">(</span><span class="sc11">url</span><span class="sc10">)</span><span class="sc0">
+    </span><span class="sc14">print</span><span class="sc10">(</span><span class="sc11">text</span><span class="sc10">)</span><span class="sc0">
+    </span><span class="sc11">narrate</span><span class="sc10">(</span><span class="sc11">url</span><span class="sc10">)</span><span class="sc0">
+</span><span class="sc1"># ```</span></div></body>
+</html>

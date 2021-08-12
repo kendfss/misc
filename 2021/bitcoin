@@ -1,0 +1,5 @@
+wallet = {
+    "segwit": "3P7yX2sZDJdJRFngKk62mBbQgjrrZfHT34",
+    "legacy": "17ufPXrFhNz1g5ybbLuX4azi9M5wJ5rtxs",
+    "address": "kennethsantanasabalo"
+}

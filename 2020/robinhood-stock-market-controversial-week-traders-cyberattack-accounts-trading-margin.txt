@@ -1,0 +1,38 @@
+
+            © 2020 Insider Inc. and finanzen.net GmbH (Imprint). All rights reserved.
+        
+	
+            Registration on or use of this site constitutes acceptance of our Terms of Service and Privacy Policy.
+        
+	
+Disclaimer |
+            Commerce Policy |
+            Made In NYC |
+            Stock quotes by finanzen.net
+
+	REUTERS/Brendan McDermid
+	Robinhood, the digital brokerage app that has soared in popularity with millennials during the COVID-19 pandemic, dominated the headlines this week after a number of developments were reported that may have jolted investors one way or another.
+	Following a Bloomberg report from last week on a number of Robinhood users who helplessly saw their accounts liquidated, a separate Bloomberg report said on Thursday that an internal review at the company found nearly 2,000 compromised Robinhood accounts, according to an unnamed source familiar with the review. 
+	In response, Robinhood sent out a push notification to its users urging them to set up their accounts for two-factor authentication. 
+	"We always respond to customers reporting fraudulent or suspicious activity and work as quickly as possible to complete investigations," a Robinhood spokesperson told Business Insider. "The security of Robinhood customer accounts is a top priority and something we take very seriously."
+
+	Read more: Nancy Zevenbergen is in the top 1% of investors over the past 5 years. She breaks down what she looks for in young companies - and shares 4 stocks she thinks could be market leaders 10 years from now.
+	To be clear, Robinhood was not hacked, but users of Robinhood were successfully targeted by cyber criminals, who gained access to their accounts and were able to liquidate securities and withdraw cash, in some cases.
+	Also on Thursday, Robinhood sent out an e-mail prior to the market open notifying its users of an increase in the cash reserve needed to trade on margin for some widely held securities.
+	"If you hold any of the affected stocks on margin, your buying power may decrease or your account may be in a deficit after these changes go into effect," Robinhood said, in addition to warning them that they may sell some or all of their stock if a margin call is not satisfied. 
+	"Rather than doing a blanket change that impacts all customers, Robinhood Securities conducted a portfolio analysis and is raising margin requirements for certain securities," a Robinhood spokesperson told Business Insider.
+
+	It's an industry standard practice to raise cash reserve requirements for traders on margin, especially when a potentially volatile market event is on the horizon or a specific security is seen to have heightened risks.
+	Read more: 'I'm extremely concerned': A former Goldman Sachs hedge-fund chief says a flood of troubling signals shows the stock market is teetering - and warns a small correction could soon morph into something much larger
+	Buying on margin allows investors to utilize proceeds from a loan, issued by the broker and the amount dependent on the size of the account, to buy or sell securities. An investor using margin will receive a margin call when the value of the portfolio declines below a set level determined by the brokerage. From there, the investor must either sell enough shares or deposit new money to satisfy the required minimum balance. 
+	Robinhood wasn't alone in raising its required minimum. Both E*Trade and Interactive Brokers informed their customers in recent weeks that they would increase their cash reserve requirements for traders on margin as investors brace for volatility heading into the November presidential election.
+	But there is one piece of Robinhood news that is sure to make some investors smile. According to a Wednesday Bloomberg report, the company is considering to once again make the trading data of its users public. 
+
+	Read more: GOLDMAN SACHS: Buy these 21 high-growth stocks that have huge upside potential as future index leaders
+	This would enable sites like Robintrack.net to continue operating. Robintrack.net was a website that used Robinhood's public data feed to tell users how many Robinhood accounts owned a particular stock on any given day.
+	"We're looking into it," Robinhood co-founder Vladimir Tenev told Bloomberg, adding that they "hear the desire to have some of that data available again."
+	Tenev said he first wants to get the data right before making it public again. The data ceased being made public in August after the company said it felt the information was being used in ways that could be misunderstood. 
+	Access to the Robinhood trading data would give the public insight into where (mostly) millennial investors are putting their money. 
+
+	Read more: Lori Keith's mutual fund has grown 98,000% in 12 years by focusing on unflashy companies. She told us about 7 such stocks that thrived in the recession - and will likely do even better in the recovery.
+	Your Personalized Market Center

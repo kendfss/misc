@@ -1,0 +1,4 @@
+GPU #1
+	Make:	8086
+	Model:	Intel(R) HD Graphics 4000
+	ID: 	0166

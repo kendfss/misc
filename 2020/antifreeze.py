@@ -1,0 +1,58 @@
+import os
+from m3ta import show, freq
+
+
+file = r'c:\users\kenneth\pipfreeze.txt'
+module = lambda i: i.split('==' if '==' in i else '@')[0].strip()
+version = lambda i: (i.split('==')[1] if '==' in i else '').strip()
+
+def lines(file):
+    with open(file,'r') as fob:
+        return [i.strip() for i in fob.readlines()]
+def modules(file):
+    return [module(i) for i in lines(file)]
+def roots(file):
+    mods = modules(file)
+    worthy = lambda i: freq(i,mods)==1 and not any(j in i for j in [k for k in mods if i!=k])
+    return [i for i in mods if worthy(i)], [i for i in mods if not worthy(i)]
+    # worthy = lambda i: module(i) == 'tensorflow' or not 'tensorflow' in module(i)
+    
+def parseVersions(file):
+    modules = {
+        module(i):version(i)
+        for i in lines(file) if module(i) in roots(file)[0]
+    }
+    
+    return modules
+    
+def reformat(file):
+    modules = parseVersions(file)
+    string = ''
+    for k,v in modules.items():
+        string += '=='.join((k,v)) if bool(v) else k
+        string += '\n'
+    return string
+    
+def dump(file):
+    source = os.path.dirname(file)
+    new = os.path.join(source,'pipsweets.txt')
+    with open(new,'w') as fob:
+        fob.write(reformat(file))
+    return new
+
+# print(modules(file))
+# show(lines(file))
+# print(parseVersions(file))
+# os.startfile(file)
+
+# for k,v in parseVersions(file).items():
+    # print(f'{k}:\t{v}')
+# print(reformat(file))
+show(roots(file)[0])
+show(roots(file)[1])
+print(len(roots(file)[0]))
+print(len(roots(file)[1]))
+
+# print(reformat(file))
+
+os.startfile(dump(file))
